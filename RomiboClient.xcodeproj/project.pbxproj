@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14EB5E0A1A8092F200EC79BD /* BLEDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 14EB5E071A8092F200EC79BD /* BLEDevice.m */; };
+		14EB5E0B1A8092F200EC79BD /* BLEUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 14EB5E091A8092F200EC79BD /* BLEUtility.m */; };
+		14EB5E101A8092FB00EC79BD /* DFBlunoDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 14EB5E0D1A8092FB00EC79BD /* DFBlunoDevice.m */; };
+		14EB5E111A8092FB00EC79BD /* DFBlunoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 14EB5E0F1A8092FB00EC79BD /* DFBlunoManager.m */; };
 		2A41C323184C3F2800649EBD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A41C322184C3F2700649EBD /* AVFoundation.framework */; };
 		2A41C325184C3F2E00649EBD /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A41C324184C3F2E00649EBD /* CoreImage.framework */; };
 		2A8351B1185F8016002AF83B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A8351B0185F8016002AF83B /* libz.dylib */; };
@@ -1147,6 +1151,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14EB5E061A8092F200EC79BD /* BLEDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEDevice.h; sourceTree = "<group>"; };
+		14EB5E071A8092F200EC79BD /* BLEDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEDevice.m; sourceTree = "<group>"; };
+		14EB5E081A8092F200EC79BD /* BLEUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEUtility.h; sourceTree = "<group>"; };
+		14EB5E091A8092F200EC79BD /* BLEUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEUtility.m; sourceTree = "<group>"; };
+		14EB5E0C1A8092FB00EC79BD /* DFBlunoDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFBlunoDevice.h; sourceTree = "<group>"; };
+		14EB5E0D1A8092FB00EC79BD /* DFBlunoDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFBlunoDevice.m; sourceTree = "<group>"; };
+		14EB5E0E1A8092FB00EC79BD /* DFBlunoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFBlunoManager.h; sourceTree = "<group>"; };
+		14EB5E0F1A8092FB00EC79BD /* DFBlunoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFBlunoManager.m; sourceTree = "<group>"; };
 		2A15D63018B5C4C1008AF982 /* RMBOExpressiveMoodEyes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBOExpressiveMoodEyes.h; sourceTree = "<group>"; };
 		2A15D63118B5C4C1008AF982 /* RMBOExpressiveMoodEyes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBOExpressiveMoodEyes.m; sourceTree = "<group>"; };
 		2A41C322184C3F2700649EBD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -2324,6 +2336,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14EB5E051A8092F200EC79BD /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				14EB5E061A8092F200EC79BD /* BLEDevice.h */,
+				14EB5E071A8092F200EC79BD /* BLEDevice.m */,
+				14EB5E081A8092F200EC79BD /* BLEUtility.h */,
+				14EB5E091A8092F200EC79BD /* BLEUtility.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		2AF522EA184C3B3A00C250EF = {
 			isa = PBXGroup;
 			children = (
@@ -2366,8 +2389,13 @@
 			children = (
 				2AF52305184C3B3A00C250EF /* RMBOAppDelegate.h */,
 				2AF52306184C3B3A00C250EF /* RMBOAppDelegate.m */,
+				14EB5E051A8092F200EC79BD /* Core */,
 				2AF52308184C3B3A00C250EF /* Main.storyboard */,
 				2AF5230B184C3B3A00C250EF /* RMBOViewController.h */,
+				14EB5E0C1A8092FB00EC79BD /* DFBlunoDevice.h */,
+				14EB5E0D1A8092FB00EC79BD /* DFBlunoDevice.m */,
+				14EB5E0E1A8092FB00EC79BD /* DFBlunoManager.h */,
+				14EB5E0F1A8092FB00EC79BD /* DFBlunoManager.m */,
 				2AF5230C184C3B3A00C250EF /* RMBOViewController.m */,
 				2AE1E3401854341A004C430F /* RMBODriver.h */,
 				2AE1E3411854341A004C430F /* RMBODriver.m */,
@@ -3628,7 +3656,7 @@
 				ORGANIZATIONNAME = com.romibo;
 				TargetAttributes = {
 					2AF522F2184C3B3A00C250EF = {
-						DevelopmentTeam = 9YYN96VW6R;
+						DevelopmentTeam = P9A3B6LBX8;
 					};
 				};
 			};
@@ -4787,10 +4815,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AF52307184C3B3A00C250EF /* RMBOAppDelegate.m in Sources */,
+				14EB5E0A1A8092F200EC79BD /* BLEDevice.m in Sources */,
+				14EB5E111A8092FB00EC79BD /* DFBlunoManager.m in Sources */,
+				14EB5E101A8092FB00EC79BD /* DFBlunoDevice.m in Sources */,
 				2AB41E361876043B00CCE380 /* RMBOExpressiveEyes.m in Sources */,
 				2AF5230D184C3B3A00C250EF /* RMBOViewController.m in Sources */,
 				2AE1E3421854341A004C430F /* RMBODriver.m in Sources */,
 				2AF52303184C3B3A00C250EF /* main.m in Sources */,
+				14EB5E0B1A8092F200EC79BD /* BLEUtility.m in Sources */,
 				B1EDAF5F190F634000C17EBC /* RMBOEyes_3.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4920,6 +4952,7 @@
 				);
 				INFOPLIST_FILE = "RomiboClient/RomiboClient-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -4945,6 +4978,7 @@
 				);
 				INFOPLIST_FILE = "RomiboClient/RomiboClient-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;

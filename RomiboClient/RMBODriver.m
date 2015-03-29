@@ -76,42 +76,9 @@
 
 // xValue and yValue range +- 1.0 float
 
-- (void)driveRobotWithXValue:(float)xValue andYValue:(float)yValue
-{
-    if (yValue > kSpeed_MaxDrive_metersPerSecond)
-        yValue = kSpeed_MaxDrive_metersPerSecond;
-
-//    NSLog(@"Driving robot with x: %f  y: %f", xValue, yValue);
-    float xFabs = fabsf(xValue);
-
-    //TFLog(@"Driving robot with values %f,%f", xValue, yValue);
-    if (xFabs < kRMBO_StraightAheadWidth) {
-        [_robot driveWithRadius:RM_DRIVE_RADIUS_STRAIGHT speed:yValue];
-        NSLog(@"Drive Straight");
-    }
-    else {
-
-        float driveRadius = kRMBO_MAX_DriveRadius - (xFabs * kRMBO_MAX_DriveRadius); // harder turn = smaller radius
-        if (driveRadius < kRMBO_MIN_DriveRadius)
-            driveRadius = kRMBO_MIN_DriveRadius;
-
-        if (xValue < 0) {
-
-            NSLog(@"Turn LEFT with radius: %f  speed: %f", driveRadius, yValue);
-
-            [_robot driveWithRadius:driveRadius speed:yValue];  // turnByAngle call did not work well.
-        }
-        else {
-            driveRadius *= -1.0f;
-            NSLog(@"Turn RIGHT with radius: %f  speed: %f", driveRadius, yValue);
-
-            [_robot driveWithRadius:driveRadius speed:yValue];  // turnByAngle call did not work well.
-        }
-    }
-}
 
 
-- (void)tiltHeadToAngle:(float)angle
+- (void)tiltHeadToAngle:(int)angle
 {
     //TFLog(@"Tilting robot with angle %f", angle);
     if (!_robot.tilting) {

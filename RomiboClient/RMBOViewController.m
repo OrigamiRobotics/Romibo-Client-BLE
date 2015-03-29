@@ -8,6 +8,7 @@
 
 #import "RMBOViewController.h"
 #import "RMBOEye.h"
+//#import "PerformSelectorWithDebounce.h"
 
 //#import "RMBOExpressiveMoodEyes.h"
 #if OLD_EYES
@@ -55,6 +56,8 @@
 #define kRMBOStopRobotMovement @"kRMBOStopRobotMovement"
 #define kRMBOChangeMood @"kRMBOChangeMood"
 
+
+
 #define kRMBOSettingsHoldThreshold 3
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -70,9 +73,27 @@
 {
     [super viewDidLoad];
     [self customizeViews];
-    [self setupMultipeerConnectivity];
-    [self setupVoiceSynth];
+        [self setupVoiceSynth];
     [self setupRobotCommunication];
+    self.blunoManager = [DFBlunoManager sharedInstance];
+    self.blunoManager.delegate = self;
+    self.aryDevices = [[NSMutableArray alloc] init];
+    self.lbReady.text = @"Not Ready!";
+    //[self.blunoManager scan];
+    
+   // dispatch_async(dispatch_get_main_queue(),^{ [self.blunoManager scan];});
+    
+//    if (self.blunoDev.bReadyToWrite)
+//    NSLog(@"writingmayeb");
+//        NSString* strTemp = @"fdsafdsa";
+//        NSData* data = [strTemp dataUsingEncoding:NSUTF8StringEncoding];
+//        [self.blunoManager writeDataToDevice:data Device:self.blunoDev];
+    
+
+    
+    [self setupMultipeerConnectivity];
+
+
     //[self setupShowkit];
     
     _verisionLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
@@ -84,6 +105,43 @@
 {
     [self setupEyeTracking];
 }
+
+
+
+-(void)readyToCommunicate:(DFBlunoDevice*)dev
+{   NSLog(@"ready to com");
+    self.blunoDev = dev;
+    self.lbReady.text = @"Ready!";
+    
+    if (self.blunoDev.bReadyToWrite)
+    {   NSLog(@"actionsend readyToWrite");
+        NSString* strTemp = @"8 . connected";
+        NSData* data = [strTemp dataUsingEncoding:NSASCIIStringEncoding];
+        
+        [self.blunoManager writeDataToDevice:data Device:self.blunoDev];
+    }
+
+}
+
+-(void)bleDidUpdateState:(BOOL)bleSupported
+{
+    if(bleSupported)
+    {NSLog(@"  ble is supported  ");
+        [self.blunoManager scan];
+    }
+}
+
+-(void)didWriteData:(DFBlunoDevice*)dev
+{
+  //  NSLog(@" didwrite   ");
+}
+-(void)didReceiveData:(NSData*)data Device:(DFBlunoDevice*)dev
+{
+    NSLog(@"did recievedata");
+   // NSLog(data);
+    self.lbReceivedMsg.text = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -203,40 +261,6 @@ didReceiveInvitationFromPeer:(MCPeerID *)peerID
     //[RMCore setDelegate:self];
 }
 
-//- (void)setupShowkit
-//{
-//    [ShowKit login:@"584.romibo_test_client" password:@"iloverobots" withCompletionBlock:^(NSString *const connectionStatus) {
-//        NSLog(@"%@", connectionStatus);
-//        [ShowKit setState: SHKAudioInputModeMuted forKey: SHKAudioInputModeKey];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleShowkitConnectionChange:) name:SHKConnectionStatusChangedNotification object:nil];
-//    }];
-//}
-//
-//- (void)handleShowkitConnectionChange:(NSNotification *)notification
-//{
-//    [ShowKit setState: SHKAudioInputModeMuted forKey: SHKAudioInputModeKey];
-//    SHKNotification *showNotice ;
-//    NSString *value ;
-//    NSLog(@"%@",value);
-//    showNotice = (SHKNotification *) [notification object];
-//    value = (NSString *)showNotice.Value;
-//    NSLog(@"%@",value);
-//    if ([value isEqualToString:SHKConnectionStatusCallIncoming]) {
-//        [ShowKit acceptCall];
-//        [self tearDownEyeTracking];
-//        [ShowKit setState: SHKAudioInputModeMuted forKey: SHKAudioInputModeKey];
-//        //[ShowKit setState:_previewView forKey:SHKPreviewDisplayViewKey];
-//        //[ShowKit setState:SHKVideoLocalPreviewEnabled forKey:SHKPreviewDisplayViewKey];
-//        [self speakUtterance:@"Starting video streaming" atSpeechRate:AVSpeechUtteranceDefaultSpeechRate * .8 withVoice:nil];
-//    }
-//    else if ([value isEqualToString:SHKConnectionStatusInCall]) {
-//        [ShowKit setState: SHKAudioInputModeMuted forKey: SHKAudioInputModeKey];
-//    }
-//    else if ([value isEqualToString:SHKConnectionStatusCallTerminated]) {
-//        [self setupEyeTracking];
-//    }
-//}
-
 
 
 - (void)tearDownEyeTracking
@@ -335,6 +359,8 @@ didReceiveInvitationFromPeer:(MCPeerID *)peerID
                                                     userInfo:dict];
   
   if (state == MCSessionStateConnecting)
+      NSLog(@"client: Connecting  ");
+
       return;
     
   if (state == MCSessionStateConnected) {
@@ -369,7 +395,7 @@ didReceiveInvitationFromPeer:(MCPeerID *)peerID
   }
 }
 
-- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID
+- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID  ////where the magic happens communication
 {
     
     NSDictionary *command = (NSDictionary *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
@@ -381,16 +407,82 @@ didReceiveInvitationFromPeer:(MCPeerID *)peerID
     else if ([command[@"command"] isEqualToString:kRMBOMoveRobot]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (command[@"x"] && command[@"y"]) {
-                [_robotDriver driveRobotWithXValue:[command[@"x"] floatValue] andYValue:[command[@"y"] floatValue]];
+                
+                
+                
+                //THIS IS WHERE WE SEND THE DRIVE MOTOR INFO
+                    //   NSLog(@"Driving robot with x: %f  y: %f", xValue, yValue);
+                    int driveLeft = 127+127*([command[@"y"] floatValue] + ([command[@"x"] floatValue]/2));
+                    int driveRight = 127+127*([command[@"y"] floatValue]- [command[@"x"] floatValue]/2);
+                    
+                    NSLog(@"Driving robot with %i %i ", driveLeft, driveRight);
+                
+                    //CREATES THE COMMAND STRING
+                
+                    NSString *param = [NSString stringWithFormat:@"%i",  driveLeft];
+                    NSString *param2 = [NSString stringWithFormat:@"%i",  driveRight];
+                    // NSString* param = [command[@"angle"] floatValue];
+                    NSString* cmdName = @"2 ";
+                    NSString* newLine = @" .";
+                    NSString* delim = @" ";
+                    
+                    NSString *packet = [cmdName stringByAppendingString:param];
+                    NSString *packet1 = [packet stringByAppendingString:delim];
+
+                    NSString *packet2 = [packet1 stringByAppendingString:param2];
+                    NSString *packet3 = [packet2 stringByAppendingString:newLine];
+                    NSData* dataPrev = data;
+                    NSData* data = [packet3 dataUsingEncoding:NSASCIIStringEncoding];
+                    
+                
+                    //SENDS THE DATA OVER BLE
+                    if (self.blunoDev.bReadyToWrite){
+                        
+                        if(!([data isEqualToData: dataPrev])){
+                            
+                            [self.blunoManager writeDataToDevice:data Device:self.blunoDev];
+                          //  sleep(.5);
+                        }
+                    }
+                    
+                
             }
         });
     }
     else if ([command[@"command"] isEqualToString:kRMBOHeadTilt]) {
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"%f", [command[@"angle"] floatValue]);
-            if (command[@"angle"]) {
-                [_robotDriver tiltHeadToAngle:[command[@"angle"] floatValue]];
-            }
+           // NSLog(@"anglezzz%f", [command[@"angle"] floatValue]);
+            
+            
+            //CREATES THE COMMAND STRING
+            
+            NSString *param = [NSString stringWithFormat:@"%i", [command[@"angle"] intValue]];
+           // NSString* param = [command[@"angle"] floatValue];
+            NSString* cmdName = @"1 ";
+            NSString* newLine = @" .";
+                  
+            NSString *packet = [cmdName stringByAppendingString:param];
+            NSString *packet1 = [packet stringByAppendingString:newLine];
+            NSData* dataPrev = data;
+            NSData* data = [packet1 dataUsingEncoding:NSASCIIStringEncoding];
+            
+            
+ 
+            //SENDS THE DATA OVER BLE
+            if (self.blunoDev.bReadyToWrite){
+        //    [self performSelector:@selector() withDebounceDuration:0.1];
+              //  sleep(150);
+                
+                
+                if(!([data isEqualToData: dataPrev])){
+                    
+            [self.blunoManager writeDataToDevice:data Device:self.blunoDev];
+                  //  sleep(.5);
+                }}
+
+            
+            
         });
     }
     else if ([command[@"command"] isEqualToString:kRMBOTurnInPlaceClockwise]) {
@@ -414,6 +506,9 @@ didReceiveInvitationFromPeer:(MCPeerID *)peerID
         });
     }
 }
+
+
+
 
 - (void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress { }
 - (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error { }

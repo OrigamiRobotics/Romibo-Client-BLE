@@ -26,7 +26,7 @@
 
 - (void)setupRobotDriverEnableLogs:(BOOL)logs;
 - (void)driveRobotWithXValue:(float)x andYValue:(float)y;
-- (void)tiltHeadToAngle:(float)angle;
+- (void)tiltHeadToAngle:(int)angle;
 - (void)stopRobot;
 - (void)turnRobotInPlaceClockwise;
 - (void)turnRobotInPlaceCounterClockwise;

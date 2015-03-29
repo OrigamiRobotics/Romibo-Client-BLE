@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EBBD5171-DDA4-4E23-A2F9-17B82B5EBEFB</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>00632B148EB5848795E166C6EFB45B9E9F026667</key>
+		<string>https://github.com/OrigamiRobotics/romibo-client.git</string>
+		<key>46ec8886-f09b-bd4d-9cf3-91f1467d5814++7889</key>
+		<string>https://ryan.future-skies.com:8443/romibo/branches/norm/RomiboClient</string>
+	</dict>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>00632B148EB5848795E166C6EFB45B9E9F026667</key>
+		<string>romibo-client/</string>
+		<key>46ec8886-f09b-bd4d-9cf3-91f1467d5814++7889</key>
+		<string>romibo-client/</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>46ec8886-f09b-bd4d-9cf3-91f1467d5814++7889</key>
+		<string>https://ryan.future-skies.com:8443/romibo</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/OrigamiRobotics/romibo-client.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>00632B148EB5848795E166C6EFB45B9E9F026667</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>00632B148EB5848795E166C6EFB45B9E9F026667</string>
+			<key>IDESourceControlWCCName</key>
+			<string>romibo-client</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>46ec8886-f09b-bd4d-9cf3-91f1467d5814++7889</string>
+			<key>IDESourceControlWCCName</key>
+			<string>romibo-client</string>
+		</dict>
+	</array>
+</dict>
+</plist>

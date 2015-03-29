@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "RMBODriver.h"
+#import "DFBlunoManager.h"
 
 
 @import AVFoundation;
@@ -24,7 +25,26 @@
 @class RMBOEyes_3;
 #endif
 
-@interface RMBOViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, MCSessionDelegate, RMBODriverDelegate, MCNearbyServiceAdvertiserDelegate>
+@interface RMBOViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, MCSessionDelegate, RMBODriverDelegate,DFBlunoDelegate ,MCNearbyServiceAdvertiserDelegate>
+
+@property(strong, nonatomic) DFBlunoManager* blunoManager;
+@property(strong, nonatomic) DFBlunoDevice* blunoDev;
+@property(strong, nonatomic) NSMutableArray* aryDevices;
+
+@property (weak, nonatomic) IBOutlet UILabel *lbReceivedMsg;
+@property (weak, nonatomic) IBOutlet UITextField *txtSendMsg;
+@property (weak, nonatomic) IBOutlet UILabel *lbReady;
+
+@property (strong, nonatomic) IBOutlet UIView *viewDevices;
+@property (weak, nonatomic) IBOutlet UITableView *tbDevices;
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *SearchIndicator;
+@property (strong, nonatomic) IBOutlet UITableViewCell *cellDevices;
+
+- (IBAction)actionSearch:(id)sender;
+- (IBAction)actionReturn:(id)sender;
+- (IBAction)actionSend:(id)sender;
+- (IBAction)actionDidEnd:(id)sender;
 
 @property (nonatomic, weak) IBOutlet UIView *previewView;
 @property (nonatomic, weak) IBOutlet UIView *blackBackgroundView;
