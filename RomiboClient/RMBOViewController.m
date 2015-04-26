@@ -358,10 +358,10 @@ didReceiveInvitationFromPeer:(MCPeerID *)peerID
                                                       object:nil
                                                     userInfo:dict];
   
-  if (state == MCSessionStateConnecting)
+    if (state == MCSessionStateConnecting) {
       NSLog(@"client: Connecting  ");
-
       return;
+    }
     
   if (state == MCSessionStateConnected) {
       _connectedToController = YES;
